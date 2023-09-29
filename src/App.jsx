@@ -2,8 +2,6 @@ import { useEffect, useState } from "react";
 import Loading from "./Loading";
 import Tours from "./Tours";
 
-
-
 const url = "https://course-api.com/react-tours-project";
 
 function App() {
@@ -13,7 +11,7 @@ function App() {
   const removeTour = (id) => {
     const newTours = tours.filter((tour) => tour.id !== id);
     setTours(newTours);
-  }
+  };
 
   const fetchTours = async () => {
     setLoading(true);
@@ -32,7 +30,7 @@ function App() {
     fetchTours();
   }, []);
 
-   if (loading) {
+  if (loading) {
     return (
       <main>
         <Loading />
@@ -41,9 +39,27 @@ function App() {
   }
   //TODO
 
+  if (tours.length === 0) {
+    return (
+      <main>
+        <div className="title">
+          <h2>Plus de visites</h2>
+          <button
+            type="button"
+            style={{ marginTop: "2rem" }}
+            className="btn"
+            onClick={() => fetchTours()}
+          >
+            Atualiser
+          </button>
+        </div>
+      </main>
+    );
+  }
+
   return (
     <main>
-      <Tours  tours={tours} removeTour={removeTour} />
+      <Tours tours={tours} removeTour={removeTour} />
     </main>
   );
 }
